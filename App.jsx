@@ -4,10 +4,9 @@ import { useState, useEffect, useCallback, useRef } from "react";
    CONSTANTS
 ══════════════════════════════════════════════════ */
 const START_DATE = new Date("2026-05-25T00:00:00");
-const TOTAL_DAYS = 21;
-const OIL_DAYS   = new Set([1, 4, 7, 10, 13, 16, 19]);
-const WASH_DAYS  = new Set([2, 5, 8, 11, 14, 17, 20]);
-
+const TOTAL_DAYS = 42;
+const OIL_DAYS = new Set([1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40]);
+const WASH_DAYS = new Set([2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41]);
 /* ══════════════════════════════════════════════════
    SKINCARE & HAIRCARE DATA
 ══════════════════════════════════════════════════ */
