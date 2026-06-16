@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>🌿 Wellness Journey</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%;background:#f6f2ec}
+body{font-family:'Poppins',sans-serif;color:#2e2a28}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:#d0c8bc;border-radius:2px}
+
+.app{min-height:100vh;background:#f6f2ec;max-width:430px;margin:0 auto}
+
+/* HEADER */
+.hdr{background:linear-gradient(145deg,#e8f2ec 0%,#eee8f8 55%,#fdeae0 100%);padding:20px 18px 16px;border-bottom:1px solid #e0dcd4}
+.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.hdr-greet{font-size:12px;color:#7a9484;font-weight:500;margin-bottom:2px}
+.hdr-title{font-size:21px;font-weight:700;color:#2e2a28;letter-spacing:-.4px;line-height:1.2}
+.hdr-sub{font-size:11px;color:#9a9490;margin-top:3px}
+.hdr-badges{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.bdg{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.bdg-s{background:#fff8e6;color:#c07a50;border:1px solid #e8c890}
+.bdg-p{background:#e8f2ec;color:#5a8a6a;border:1px solid #a8d4b4}
+.hpb{height:6px;background:rgba(255,255,255,.5);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.hpf{height:100%;border-radius:3px;background:linear-gradient(90deg,#7abf94,#a894d0);transition:width .7s ease}
+.hpl{display:flex;justify-content:space-between;font-size:10px;color:#9a9490}
+
+/* NAV */
+.nav{display:flex;background:#fff;border-bottom:1px solid #e8e2da;position:sticky;top:0;z-index:30;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px 9px;background:none;border:none;color:#b4a89e;font-family:'Poppins',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;border-bottom:2px solid transparent}
+.nb:hover{color:#6e6860}
+.ne{font-size:16px;line-height:1}
+.nb.on{color:#6d9e84;border-bottom-color:#6d9e84;font-weight:600}
+
+/* MAIN */
+.main{padding:16px 14px 56px}
+.ani{animation:fadeUp .28s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* DAY NAV */
+.dnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.arr{width:38px;height:38px;border-radius:50%;border:1px solid #e0dcd4;background:#fff;color:#a0988e;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 1px 5px rgba(0,0,0,.06);line-height:1}
+.arr:hover:not(:disabled){border-color:#6d9e84;color:#6d9e84}
+.arr:disabled{opacity:.25;cursor:not-allowed}
+.dctr{text-align:center;flex:1}
+.dnr{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:2px;flex-wrap:wrap}
+.dnum{font-size:20px;font-weight:700;color:#2e2a28}
+.ddate{font-size:11px;color:#9a9490}
+.chip{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;letter-spacing:.3px}
+.ct{background:#6d9e84;color:#fff}
+.cp2{background:#eaf4ee;color:#6d9e84;border:1px solid #a8d4b4}
+.cf{background:#fdeae0;color:#c07a50;border:1px solid #e8c090}
+.cc1{background:#ede9f8;color:#8878c0;border:1px solid #c0b4e0}
+.cc2{background:#fce8ef;color:#c06888;border:1px solid #e0b4c4}
+
+/* DAY PROGRESS CARD */
+.dpc{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #ede8e0}
+.dpr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.dpl{font-size:12px;color:#9a9490}
+.dpp{font-size:14px;font-weight:700}
+.pb{height:8px;background:#f0ece4;border-radius:4px;overflow:hidden}
+.pf{height:100%;border-radius:4px;transition:width .5s ease}
+.pm{font-size:12px;font-weight:600;text-align:center;margin-top:8px}
+
+/* TASK GROUP */
+.tgrp{margin-bottom:22px}
+.clbl{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;padding-left:2px}
+
+/* TASK CARD */
+.tc{background:#fff;border:1px solid #ede8e0;border-radius:16px;margin-bottom:8px;display:flex;align-items:center;overflow:hidden;flex-wrap:wrap;box-shadow:0 1px 6px rgba(0,0,0,.04);transition:box-shadow .2s,transform .15s;cursor:pointer;user-select:none}
+.tc:active{transform:scale(.98)}
+.tc:hover{box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.tc.done{background:#fafdf8;border-color:#cce8d4}
+.tc.ex{cursor:default}
+.tcb{width:4px;align-self:stretch;flex-shrink:0}
+.tci{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;margin:12px 0 12px 10px}
+.tbd{flex:1;padding:12px 0;min-width:0}
+.tn{font-size:13px;font-weight:600;color:#2e2a28;line-height:1.3}
+.tn.x{color:#6d9e84;text-decoration:line-through;text-decoration-color:#a8d4b480}
+.ts{font-size:11px;color:#b4a89e;margin-top:1px}
+.tck{width:26px;height:26px;border-radius:50%;border:2px solid #d8d0c8;margin-right:14px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;transition:all .2s}
+
+/* MEALS */
+.mr{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.pill{font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid #ddd8d0;background:#faf8f4;color:#9a9490;cursor:pointer;transition:all .15s;font-family:'Poppins',sans-serif;font-weight:500}
+.pill:hover{border-color:#a8a09a}
+
+/* EXPAND PANEL */
+.ep{width:100%;border-top:1px solid #f0ece4;padding:14px;background:#fdfbf7}
+.es{margin-bottom:14px}
+.et{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#a89e94;margin-bottom:8px}
+.sr{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #f0ece4;font-size:13px;color:#3a3535;cursor:pointer;transition:opacity .1s}
+.sr:first-of-type{border-top:none}
+.sr:hover{opacity:.65}
+.mc{width:20px;height:20px;border-radius:50%;border:1.5px solid #d0c8c0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;transition:all .2s}
+.pw{display:flex;flex-wrap:wrap;gap:6px}
+.mb{display:block;width:100%;background:none;border:none;font-size:12px;font-weight:600;text-align:center;cursor:pointer;margin-top:12px;padding:9px;border-radius:10px;transition:background .15s;font-family:'Poppins',sans-serif}
+.mb:hover{background:#f0ece4}
+
+/* FUTURE */
+.fb{text-align:center;padding:52px 20px;color:#b4a89e}
+.ft{font-size:16px;font-weight:700;color:#6e6860;margin-bottom:6px}
+
+/* CALENDAR */
+.stl{font-size:17px;font-weight:700;color:#2e2a28;margin-bottom:13px}
+.leg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:#9a9490}
+.ld{width:9px;height:9px;border-radius:50%}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px}
+.ch{text-align:center;font-size:9px;font-weight:700;color:#b4a89e;padding:5px 0;letter-spacing:.5px}
+.ce{aspect-ratio:1}
+.cc{aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid;padding:2px;transition:transform .15s,box-shadow .15s;font-family:'Poppins',sans-serif;position:relative}
+.clk:hover{transform:scale(1.06);box-shadow:0 4px 14px rgba(0,0,0,.1);cursor:pointer}
+.cnow{box-shadow:0 0 0 2px #6d9e84,0 3px 10px rgba(109,158,132,.25)}
+.cdn{font-size:14px;font-weight:700;line-height:1}
+.cnd{position:absolute;top:3px;right:3px;width:5px;height:5px;border-radius:50%;background:#6d9e84}
+.cmb{width:75%;height:2px;background:#e8e0d4;border-radius:1px;margin-top:2px}
+.cmf{height:100%;border-radius:1px}
+.csep{grid-column:1/-1;background:linear-gradient(90deg,transparent,#c0b4d4,transparent);height:1px;margin:4px 0}
+.cslbl{grid-column:1/-1;text-align:center;font-size:10px;font-weight:700;color:#8878c0;letter-spacing:1px;padding:4px 0 2px}
+.ctip{background:#fff;border:1px solid #e0dcd4;border-radius:10px;padding:8px 12px;font-size:11px;color:#6e6860;margin-bottom:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.csum{display:flex;justify-content:space-around;background:#fff;border-radius:16px;border:1px solid #e8e2da;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.si{display:flex;flex-direction:column;align-items:center;gap:4px}
+.sn{font-size:26px;font-weight:800;line-height:1}
+.sl{font-size:10px;color:#9a9490}
+
+/* PROGRESS */
+.pv{display:flex;flex-direction:column;gap:12px}
+.ph{background:linear-gradient(145deg,#eaf4ee 0%,#eee8f8 100%);border-radius:20px;padding:24px 20px;text-align:center;border:1px solid #ddd8ec}
+.pb2{font-size:60px;font-weight:800;line-height:1;margin-bottom:4px}
+.psub{font-size:12px;color:#9a9490;margin-bottom:16px}
+.phr{display:flex;justify-content:space-around}
+.pm2{display:flex;flex-direction:column;align-items:center;gap:2px}
+.pmi{font-size:20px}
+.pmv{font-size:18px;font-weight:700;color:#2e2a28}
+.pml{font-size:10px;color:#9a9490}
+.pcard{background:#fff;border-radius:16px;border:1px solid #ede8e0;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.pct{font-size:12px;font-weight:700;color:#2e2a28;margin-bottom:13px}
+.crow{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.crl{width:78px;font-size:11px;font-weight:600;flex-shrink:0}
+.cb{flex:1;height:8px;background:#f0ece4;border-radius:4px;overflow:hidden}
+.cbf{height:100%;border-radius:4px;transition:width .5s ease}
+.cbp{width:34px;text-align:right;font-size:11px;font-weight:600;color:#9a9490}
+.hr{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hi{font-size:18px;flex-shrink:0}
+.hif{flex:1;min-width:0}
+.hl{font-size:12px;font-weight:500;color:#3a3535;display:block;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hb{height:5px;background:#f0ece4;border-radius:3px;overflow:hidden}
+.hbf{height:100%;border-radius:3px;transition:width .4s ease}
+.hpc{width:32px;text-align:right;font-size:11px;font-weight:600;color:#9a9490}
+.nn{font-size:11px;color:#c06888;font-style:italic;text-align:center;margin-top:12px;line-height:1.5}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.spi{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:12px;border:1px solid;text-align:center}
+.cycc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cyci{border-radius:14px;padding:16px;text-align:center;border:1px solid}
+.cycn{font-size:30px;font-weight:800}
+.cycl{font-size:11px;margin-top:5px;line-height:1.5}
+
+/* FINAL REPORT */
+.fw{padding:20px 14px 56px}
+.fh{background:linear-gradient(145deg,#e8f4ee,#ede8f8,#fdeae0);border-radius:20px;padding:28px 20px;text-align:center;margin-bottom:16px;border:1px solid #d8d0e8}
+.fe{font-size:56px;margin-bottom:10px}
+.ft2{font-size:22px;font-weight:800;color:#2e2a28;margin-bottom:6px}
+.fs2{font-size:13px;color:#6e6860;line-height:1.7}
+.fsg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.fsc{background:#fff;border-radius:14px;padding:14px;text-align:center;border:1px solid #ede8e0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.fsn{font-size:28px;font-weight:800}
+.fsl{font-size:10px;color:#9a9490;margin-top:3px}
+
+/* CELEBRATION POPUP */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:9998;padding:20px;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.ob{background:#fff;border-radius:24px;padding:32px 24px;text-align:center;max-width:320px;width:100%;position:relative;overflow:hidden;animation:popIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+.obg{position:absolute;inset:0;background:linear-gradient(145deg,#eaf4ee 0%,#f0ebfc 100%);z-index:0}
+.ocnt{position:relative;z-index:1}
+.oe{font-size:56px;margin-bottom:10px;display:block}
+.ocon{display:flex;justify-content:space-around;margin-bottom:12px;font-size:18px}
+.otl{font-size:22px;font-weight:800;color:#2e2a28;margin-bottom:8px}
+.omsg{font-size:13px;color:#6e6860;line-height:1.6;margin-bottom:20px}
+.obtn{background:linear-gradient(135deg,#6d9e84,#8878c0);color:#fff;border:none;border-radius:100px;padding:12px 32px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:transform .15s;width:100%}
+.obtn:hover{transform:scale(1.02)}
+@keyframes cf{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(60px) rotate(360deg);opacity:0}}
+.cp{display:inline-block;animation:cf 1.2s ease-in forwards}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:11px 24px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;background:#fff;border:1px solid #a8d4b4;color:#4a7a5a;box-shadow:0 6px 24px rgba(0,0,0,.1);white-space:nowrap;max-width:88vw;font-family:'Poppins',sans-serif;animation:fadeUp .3s ease}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const {useState,useEffect,useCallback,useRef}=React;
+
+/* ─── CONSTANTS ─────────────────────────────── */
+const START_DATE = new Date("2026-05-25T00:00:00");
+const TOTAL_DAYS = 42;
+const OIL_DAYS   = new Set([1,4,7,10,13,16,19,22,25,28,31,34,37,40]);
+const WASH_DAYS  = new Set([2,5,8,11,14,17,20,23,26,29,32,35,38,41]);
+
+/* ─── SKINCARE DATA ─────────────────────────── */
+const SC_AM=[{id:"sc_am1",icon:"🧼",label:"Face Wash"},{id:"sc_am2",icon:"💦",label:"Toner"},{id:"sc_am3",icon:"🧴",label:"Moisturizer"},{id:"sc_am4",icon:"☀️",label:"Sunscreen SPF"}];
+const SC_PM=[{id:"sc_pm1",icon:"🌿",label:"Cleansing Oil"},{id:"sc_pm2",icon:"🧼",label:"Face Wash"},{id:"sc_pm3",icon:"💎",label:"Serum / Treatment"},{id:"sc_pm4",icon:"🌙",label:"Night Cream"}];
+const SC_WK=[{id:"sc_wk1",icon:"✨",label:"Face Mask (15–20 min)"},{id:"sc_wk2",icon:"🌸",label:"Gentle Exfoliation"},{id:"sc_wk3",icon:"👁️",label:"Under-Eye Patches"}];
+const ALL_SC=[...SC_AM,...SC_PM,...SC_WK];
+
+/* ─── HAIR DATA ──────────────────────────────── */
+const OILS=["Coconut 🥥","Argan 🌿","Castor 🍶","Olive 🫒","Almond 🌰","Bhringraj 🌺","Jojoba 🌾"];
+const OTIMES=["30 min","1 hour","2 hours","4 hours","Overnight"];
+const WSTEPS=[{id:"hw1",icon:"🧴",label:"Shampoo"},{id:"hw2",icon:"💆",label:"Conditioner"},{id:"hw3",icon:"🌿",label:"Hair Mask"},{id:"hw4",icon:"✨",label:"Hair Serum"}];
+
+/* ─── CATEGORIES ─────────────────────────────── */
+const CATS={
+  schedule:{label:"Daily Rhythm",color:"#6d9e84",pale:"#eaf4ee"},
+  meals:   {label:"Nourishment", color:"#c07a50",pale:"#fdf0e6"},
+  mind:    {label:"Mind & Soul", color:"#8878c0",pale:"#eee9f8"},
+  body:    {label:"Movement",    color:"#5090bc",pale:"#e6f2f9"},
+  beauty:  {label:"Self Care",   color:"#c06888",pale:"#fce8ef"},
+};
+
+/* ─── MESSAGES ───────────────────────────────── */
+const TTOASTS={
+  wake:    ["Rise and shine! 🌅","Morning warrior! ☀️","Early bird wins! 🌤️","The day is yours ✨"],
+  sleep:   ["Wind down done! 🌙","Rest is earned 💤","Sweet dreams ✨","Recovery mode: ON 🌿"],
+  meal1:   ["Breakfast done! 🍳","Morning fuel ✓ ⚡","Day started right! 🌤️"],
+  meal2:   ["Midday fuel! 🥗","Lunch logged! 🌿","Energy topped up ✓"],
+  meal3:   ["Three meals! 🍲","Dinner ticked! 🌆","Nutrition complete ✓"],
+  reading: ["Mind fed! 📖","5 pages done! 🌱","Knowledge growing 📚"],
+  writing: ["Thoughts captured! ✏️","Words on paper! ✨","Your story grows 📝"],
+  exercise:["YESSS! 💪","Body moved! 🔥","Beast mode! 🏃","You showed up! ⚡"],
+  skincare:["Skin glowing! ✨","Sunday ritual done! 🌸","Self care is self love 💆"],
+  oiling:  ["Scalp nourished! 💧","Hair treatment done! 🌿","Oiled up beautifully 🥥"],
+  hairwash:["Fresh hair! 🚿","Clean and gorgeous! ✨","Post-oil cleanse done 🌿"],
+  def:     ["Noted! ✓","Done! 🌿","One more down ✨","Keep flowing! 🌸"],
+};
+
+const CHAMP=[
+  {emoji:"🎉",title:"WOHOOOO!",msg:"Perfect day! You absolute legend. Every single habit done!"},
+  {emoji:"🔥",title:"CHAMPION DAY!",msg:"100% completion! Your future self is doing a happy dance right now."},
+  {emoji:"👑",title:"LEGENDARY!",msg:"Not one habit skipped. That is rare. That is YOU."},
+  {emoji:"✨",title:"YOU'RE GLOWING!",msg:"Every box ticked. Seriously, you should be proud of today."},
+  {emoji:"🌟",title:"FULL MARKS!",msg:"Perfect day unlocked. You're building a life, not just habits."},
+];
+
+const MILES={
+  7: {emoji:"🌱",title:"One Week Done!",msg:"7 days of showing up. The seed is planted. Keep watering it."},
+  14:{emoji:"🌿",title:"Two Weeks Strong!",msg:"Halfway through Cycle 1! Habits are forming — you can feel it."},
+  21:{emoji:"🌸",title:"Cycle 1 Complete!",msg:"21 days done! You actually did it. Round 2 is going to be even better."},
+  22:{emoji:"🚀",title:"New Cycle Begins!",msg:"Welcome to Cycle 2! You've got 21 days of momentum. Let's build on it."},
+  28:{emoji:"⚡",title:"Four Weeks In!",msg:"A full month of wellness. You are genuinely a different version of yourself."},
+  35:{emoji:"🏆",title:"Five Weeks Strong!",msg:"35 days. Most people quit on day 3. You're still here. Legendary."},
+  42:{emoji:"👑",title:"42 Days Complete!",msg:"SIX WEEKS of showing up. You transformed your life one habit at a time. Look at you. 🌟"},
+};
+
+/* ─── HELPERS ────────────────────────────────── */
+function getDayDate(n){const d=new Date(START_DATE);d.setDate(d.getDate()+(n-1));return d;}
+function isSun(n){return getDayDate(n).getDay()===0;}
+function fmtLong(n){return getDayDate(n).toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"});}
+const DOW=["Su","Mo","Tu","We","Th","Fr","Sa"];
+
+function getTasks(n){
+  const t=[
+    {id:"wake",    icon:"🌅",label:"Wake Up",       sub:"7–8 AM",             cat:"schedule"},
+    {id:"sleep",   icon:"🌙",label:"Wind Down",      sub:"Sleep by 12–1 AM",   cat:"schedule"},
+    {id:"meal1",   icon:"🍳",label:"Breakfast",                                cat:"meals",isMeal:true},
+    {id:"meal2",   icon:"🥗",label:"Lunch",                                    cat:"meals",isMeal:true},
+    {id:"meal3",   icon:"🍲",label:"Dinner",                                   cat:"meals",isMeal:true},
+    {id:"reading", icon:"📖",label:"Read",           sub:"5 pages minimum",    cat:"mind"},
+    {id:"writing", icon:"✏️",label:"Write",          sub:"4–5 key points",     cat:"mind"},
+    {id:"exercise",icon:"🏃",label:"Move Your Body", sub:"any exercise counts", cat:"body"},
+  ];
+  if(isSun(n)) t.push({id:"skincare",icon:"✨",label:"Sunday Skin Ritual",sub:"full routine",cat:"beauty",isSC:true});
+  if(OIL_DAYS.has(n)) t.push({id:"oiling",icon:"💧",label:"Hair Oiling",sub:"nourish your scalp",cat:"beauty",isOil:true});
+  if(WASH_DAYS.has(n)) t.push({id:"hairwash",icon:"🚿",label:"Hair Wash",sub:"post-oil cleanse",cat:"beauty",isWash:true});
+  return t;
+}
+
+function getCurDay(){
+  const now=new Date();now.setHours(0,0,0,0);
+  const st=new Date(START_DATE);st.setHours(0,0,0,0);
+  return Math.floor((now-st)/86400000)+1;
+}
+
+/* ─── APP ────────────────────────────────────── */
+function App(){
+  const [data,setData]       = useState({});
+  const [tab,setTab]         = useState("today");
+  const [viewDay,setViewDay] = useState(null);
+  const [loaded,setLoaded]   = useState(false);
+  const [toast,setToast]     = useState(null);
+  const [cel,setCel]         = useState(null);
+  const [shownM,setShownM]   = useState({});
+  const tRef=useRef(null);
+  const cRef=useRef(null);
+
+  const curDay=getCurDay();
+  const display=viewDay??Math.max(1,Math.min(Math.max(curDay,1),TOTAL_DAYS));
+
+  useEffect(()=>{
+    try{
+      const r=localStorage.getItem("wellness21_v2");if(r)setData(JSON.parse(r));
+      const m=localStorage.getItem("w_miles_v2");if(m)setShownM(JSON.parse(m));
+    }catch{}
+    setLoaded(true);
+  },[]);
+
+  useEffect(()=>{if(!loaded)return;try{localStorage.setItem("wellness21_v2",JSON.stringify(data));}catch{}},[data,loaded]);
+  useEffect(()=>{if(!loaded)return;try{localStorage.setItem("w_miles_v2",JSON.stringify(shownM));}catch{}},[shownM,loaded]);
+
+  useEffect(()=>{
+    if(!loaded)return;
+    const ms=MILES[display];
+    if(ms&&!shownM[display]){
+      setCel({...ms,isMile:true});
+      setShownM(p=>({...p,[display]:true}));
+    }
+  },[display,loaded]);
+
+  const toast2=useCallback((msg)=>{
+    clearTimeout(tRef.current);
+    setToast({msg,id:Date.now()});
+    tRef.current=setTimeout(()=>setToast(null),2600);
+  },[]);
+
+  const toggle=useCallback((dn,tid)=>{
+    setData(prev=>{
+      const day=prev[dn]||{tasks:{}};
+      const tasks={...(day.tasks||{})};
+      const was=!!tasks[tid]?.done;
+      tasks[tid]={...tasks[tid],done:!was};
+      if(!was){
+        const msgs=TTOASTS[tid]||TTOASTS.def;
+        toast2(msgs[Math.floor(Math.random()*msgs.length)]);
+        const all=getTasks(dn);
+        const dc=all.filter(t=>t.id===tid?true:tasks[t.id]?.done).length;
+        if(dc===all.length){
+          clearTimeout(cRef.current);
+          cRef.current=setTimeout(()=>{
+            setCel({...CHAMP[Math.floor(Math.random()*CHAMP.length)],isChamp:true});
+          },400);
+        }
+      }
+      return{...prev,[dn]:{...day,tasks}};
+    });
+  },[toast2]);
+
+  const upd=useCallback((dn,tid,f,v)=>{
+    setData(prev=>{
+      const day=prev[dn]||{tasks:{}};
+      const tasks={...(day.tasks||{}),[tid]:{...(day.tasks?.[tid]||{}),[f]:v}};
+      return{...prev,[dn]:{...day,tasks}};
+    });
+  },[]);
+
+  /* Stats */
+  const stat=(()=>{
+    let done=0,total=0;
+    for(let d=1;d<=TOTAL_DAYS;d++){const t=getTasks(d),s=data[d]?.tasks||{};total+=t.length;done+=t.filter(tk=>s[tk.id]?.done).length;}
+    return{done,total,pct:total>0?Math.round(done/total*100):0};
+  })();
+
+  const streak=(()=>{
+    let cur=0;
+    for(let d=1;d<=Math.min(curDay,TOTAL_DAYS);d++){
+      const t=getTasks(d),s=data[d]?.tasks||{};
+      const p=t.length?t.filter(tk=>s[tk.id]?.done).length/t.length:0;
+      if(p>=0.6)cur++;else if(d<curDay)cur=0;
+    }
+    return cur;
+  })();
+
+  const dayComp=(d)=>{
+    const t=getTasks(d),s=data[d]?.tasks||{};
+    const done=t.filter(tk=>s[tk.id]?.done).length;
+    return{done,total:t.length,pct:t.length?done/t.length:0};
+  };
+
+  const greet=(()=>{const h=new Date().getHours();if(h<12)return"Good morning 🌸";if(h<17)return"Good afternoon ☀️";if(h<21)return"Good evening 🌙";return"Good night ✨";})();
+  const jpct=Math.max(0,Math.min(100,(Math.max(curDay-1,0)/TOTAL_DAYS)*100));
+
+  if(curDay>TOTAL_DAYS)return(<div className="app"><FinalReport data={data} dayComp={dayComp}/></div>);
+
+  return(
+    <div className="app">
+      <header className="hdr">
+        <div className="hdr-inner">
+          <div>
+            <p className="hdr-greet">{greet}</p>
+            <h1 className="hdr-title">Wellness Journey</h1>
+            <p className="hdr-sub">{curDay<=0?"Starting May 25 ✨":curDay>21?`🌸 Cycle 2 · Day ${curDay-21} of 21`:`🌱 Cycle 1 · Day ${curDay} of 21`}</p>
+          </div>
+          <div className="hdr-badges">
+            <div className="bdg bdg-s">🔥 {streak} streak</div>
+            <div className="bdg bdg-p">{stat.pct}% done</div>
+          </div>
+        </div>
+        <div className="hpb"><div className="hpf" style={{width:`${jpct}%`}}/></div>
+        <div className="hpl"><span>Day 1 · May 25</span><span>Day 42 · Jul 5</span></div>
+      </header>
+
+      <nav className="nav">
+        {[{id:"today",l:"Today",e:"🌿"},{id:"cal",l:"Calendar",e:"📅"},{id:"prog",l:"Progress",e:"📊"}].map(t=>(
+          <button key={t.id} className={`nb${tab===t.id?" on":""}`} onClick={()=>setTab(t.id)}>
+            <span className="ne">{t.e}</span><span>{t.l}</span>
+          </button>
+        ))}
+      </nav>
+
+      <main className="main">
+        {tab==="today"&&<TodayView day={display} curDay={curDay} data={data} toggle={toggle} upd={upd} setViewDay={setViewDay}/>}
+        {tab==="cal"&&<CalView curDay={curDay} dayComp={dayComp} onClick={(d)=>{setViewDay(d);setTab("today");}}/>}
+        {tab==="prog"&&<ProgView data={data} curDay={curDay} stat={stat} streak={streak} dayComp={dayComp}/>}
+      </main>
+
+      {cel&&<CelPopup d={cel} onClose={()=>setCel(null)}/>}
+      {toast&&<div key={toast.id} className="toast">{toast.msg}</div>}
+    </div>
+  );
+}
+
+/* ─── TODAY VIEW ─────────────────────────────── */
+function TodayView({day,curDay,data,toggle,upd,setViewDay}){
+  const tasks=getTasks(day);
+  const saved=data[day]?.tasks||{};
+  const isFut=day>curDay&&curDay>0;
+  const isNow=day===curDay;
+  const isPast=day<curDay;
+  const done=tasks.filter(t=>saved[t.id]?.done).length;
+  const pct=tasks.length?done/tasks.length:0;
+  const pn=Math.round(pct*100);
+  const cyc=day<=21?"Cycle 1":"Cycle 2";
+  const cd=day<=21?day:day-21;
+  const bc=pct===1?"#6d9e84":pct>=0.6?"#c07a50":"#c06888";
+  const grps={};
+  tasks.forEach(t=>{(grps[t.cat]=grps[t.cat]||[]).push(t);});
+
+  return(
+    <div className="ani">
+      <div className="dnav">
+        <button className="arr" onClick={()=>setViewDay(Math.max(1,day-1))} disabled={day<=1}>‹</button>
+        <div className="dctr">
+          <div className="dnr">
+            <span className="dnum">Day {day}</span>
+            {isNow&&<span className="chip ct">Today</span>}
+            {isPast&&<span className="chip cp2">Logged</span>}
+            {isFut&&<span className="chip cf">Coming up</span>}
+            <span className={`chip ${day<=21?"cc1":"cc2"}`}>{cyc} D{cd}</span>
+          </div>
+          <p className="ddate">{fmtLong(day)}</p>
+        </div>
+        <button className="arr" onClick={()=>setViewDay(Math.min(42,day+1))} disabled={day>=42}>›</button>
+      </div>
+
+      <div className="dpc">
+        <div className="dpr"><span className="dpl">{done}/{tasks.length} habits</span><span className="dpp" style={{color:bc}}>{pn}%</span></div>
+        <div className="pb"><div className="pf" style={{width:`${pn}%`,background:bc}}/></div>
+        {pct===1&&<p className="pm" style={{color:"#6d9e84"}}>🌟 Perfect day! You are absolutely glowing.</p>}
+        {pct>=0.6&&pct<1&&<p className="pm" style={{color:"#c07a50"}}>✨ Beautiful progress. Keep it going!</p>}
+        {pct>=0.3&&pct<0.6&&!isFut&&<p className="pm" style={{color:"#8878c0"}}>🌱 Good start — more to tick off!</p>}
+      </div>
+
+      {isFut?(
+        <div className="fb">
+          <div style={{fontSize:44,marginBottom:10}}>🌱</div>
+          <p className="ft">Day {day} is coming up</p>
+          <p>Stay consistent — your future self will thank you.</p>
+        </div>
+      ):(
+        Object.entries(grps).map(([cat,ct])=>(
+          <div key={cat} className="tgrp">
+            <p className="clbl" style={{color:CATS[cat].color}}>{CATS[cat].label}</p>
+            {ct.map(task=>{
+              const s=saved[task.id]||{};
+              if(task.isSC)  return<SCCard   key={task.id} task={task} s={s} onT={()=>toggle(day,task.id)} onU={(f,v)=>upd(day,task.id,f,v)}/>;
+              if(task.isOil) return<OilCard  key={task.id} task={task} s={s} onT={()=>toggle(day,task.id)} onU={(f,v)=>upd(day,task.id,f,v)}/>;
+              if(task.isWash)return<WashCard key={task.id} task={task} s={s} onT={()=>toggle(day,task.id)} onU={(f,v)=>upd(day,task.id,f,v)}/>;
+              return<TCard key={task.id} task={task} s={s} onT={()=>toggle(day,task.id)} onU={(f,v)=>upd(day,task.id,f,v)}/>;
+            })}
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
+/* ─── TASK CARD ──────────────────────────────── */
+function TCard({task,s,onT,onU}){
+  const done=!!s.done;const cat=CATS[task.cat];
+  return(
+    <div className={`tc${done?" done":""}`} onClick={onT}>
+      <div className="tcb" style={{background:cat.color}}/>
+      <div className="tci" style={{background:cat.pale}}>{task.icon}</div>
+      <div className="tbd">
+        <p className={`tn${done?" x":""}`}>{task.label}</p>
+        {task.sub&&<p className="ts">{task.sub}</p>}
+        {task.isMeal&&done&&(
+          <div className="mr" onClick={e=>e.stopPropagation()}>
+            {["🏠 Home","🏪 Outside"].map(mt=>(
+              <button key={mt} className="pill"
+                style={s.mealType===mt?{background:cat.pale,borderColor:cat.color,color:cat.color}:{}}
+                onClick={()=>onU("mealType",s.mealType===mt?null:mt)}>{mt}</button>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="tck" style={done?{background:cat.color,borderColor:cat.color}:{}}>{done&&"✓"}</div>
+    </div>
+  );
+}
+
+/* ─── SKINCARE CARD ──────────────────────────── */
+function SCCard({task,s,onT,onU}){
+  const [open,setOpen]=useState(false);
+  const done=!!s.done;const cat=CATS[task.cat];
+  const sd=ALL_SC.filter(x=>s[x.id]).length;
+  return(
+    <div className={`tc ex${done?" done":""}`}>
+      <div className="tcb" style={{background:cat.color}}/>
+      <div className="tci" style={{background:cat.pale}}>{task.icon}</div>
+      <div className="tbd" onClick={()=>setOpen(o=>!o)}>
+        <p className={`tn${done?" x":""}`}>{task.label}</p>
+        <p className="ts">{sd}/{ALL_SC.length} steps · {open?"close ▲":"expand ▼"}</p>
+      </div>
+      <div className="tck" style={done?{background:cat.color,borderColor:cat.color}:{}} onClick={onT}>{done&&"✓"}</div>
+      {open&&(
+        <div className="ep">
+          {[{t:"☀️ Morning Ritual",steps:SC_AM},{t:"🌙 Evening Ritual",steps:SC_PM},{t:"🌸 Weekly Treats",steps:SC_WK}].map(({t,steps})=>(
+            <div key={t} className="es">
+              <p className="et">{t}</p>
+              {steps.map(st=>(
+                <div key={st.id} className="sr" onClick={()=>onU(st.id,!s[st.id])}>
+                  <div className="mc" style={s[st.id]?{background:cat.color,borderColor:cat.color}:{}}>{s[st.id]&&"✓"}</div>
+                  <span>{st.icon} {st.label}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+          <button className="mb" style={{color:cat.color}} onClick={()=>{ALL_SC.forEach(x=>onU(x.id,true));if(!done)onT();setOpen(false);}}>Mark all done ✓</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── HAIR OIL CARD ──────────────────────────── */
+function OilCard({task,s,onT,onU}){
+  const [open,setOpen]=useState(false);
+  const done=!!s.done;const cat=CATS[task.cat];
+  return(
+    <div className={`tc ex${done?" done":""}`}>
+      <div className="tcb" style={{background:cat.color}}/>
+      <div className="tci" style={{background:cat.pale}}>{task.icon}</div>
+      <div className="tbd" onClick={()=>setOpen(o=>!o)}>
+        <p className={`tn${done?" x":""}`}>{task.label}</p>
+        <p className="ts">{s.oil?`${s.oil}${s.dur?` · ${s.dur}`:""}`:open?"close ▲":"log details ▼"}</p>
+      </div>
+      <div className="tck" style={done?{background:cat.color,borderColor:cat.color}:{}} onClick={onT}>{done&&"✓"}</div>
+      {open&&(
+        <div className="ep">
+          <p className="et">Which oil?</p>
+          <div className="pw">
+            {OILS.map(o=>(
+              <button key={o} className="pill"
+                style={s.oil===o?{background:cat.pale,borderColor:cat.color,color:cat.color}:{}}
+                onClick={()=>onU("oil",s.oil===o?null:o)}>{o}</button>
+            ))}
+          </div>
+          <p className="et" style={{marginTop:12}}>Left in for how long?</p>
+          <div className="pw">
+            {OTIMES.map(t=>(
+              <button key={t} className="pill"
+                style={s.dur===t?{background:cat.pale,borderColor:cat.color,color:cat.color}:{}}
+                onClick={()=>onU("dur",s.dur===t?null:t)}>{t}</button>
+            ))}
+          </div>
+          <button className="mb" style={{color:cat.color}} onClick={()=>{if(!done)onT();setOpen(false);}}>{done?"Logged ✓":"Mark as done ✓"}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── HAIR WASH CARD ─────────────────────────── */
+function WashCard({task,s,onT,onU}){
+  const [open,setOpen]=useState(false);
+  const done=!!s.done;const cat=CATS[task.cat];
+  const sd=WSTEPS.filter(x=>s[x.id]).length;
+  return(
+    <div className={`tc ex${done?" done":""}`}>
+      <div className="tcb" style={{background:cat.color}}/>
+      <div className="tci" style={{background:cat.pale}}>{task.icon}</div>
+      <div className="tbd" onClick={()=>setOpen(o=>!o)}>
+        <p className={`tn${done?" x":""}`}>{task.label}</p>
+        <p className="ts">{sd>0?`${sd}/${WSTEPS.length} steps · ${open?"close ▲":"view ▼"}`:open?"close ▲":"log routine ▼"}</p>
+      </div>
+      <div className="tck" style={done?{background:cat.color,borderColor:cat.color}:{}} onClick={onT}>{done&&"✓"}</div>
+      {open&&(
+        <div className="ep">
+          <p className="et">Today's wash routine</p>
+          {WSTEPS.map(st=>(
+            <div key={st.id} className="sr" onClick={()=>onU(st.id,!s[st.id])}>
+              <div className="mc" style={s[st.id]?{background:cat.color,borderColor:cat.color}:{}}>{s[st.id]&&"✓"}</div>
+              <span>{st.icon} {st.label}</span>
+            </div>
+          ))}
+          <button className="mb" style={{color:cat.color}} onClick={()=>{if(!done)onT();setOpen(false);}}>{done?"Logged ✓":"Mark wash done ✓"}</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── CALENDAR VIEW ──────────────────────────── */
+function CalView({curDay,dayComp,onClick}){
+  const [hov,setHov]=useState(null);
+  const startDow=getDayDate(1).getDay();
+  const cells=[...Array(startDow).fill(null),...Array.from({length:TOTAL_DAYS},(_,i)=>i+1)];
+
+  const cs=(d)=>{
+    if(d>curDay&&curDay>0)return{bg:"#f2ede6",bd:"#e4ddd4",txt:"#c4b8ac"};
+    const{pct}=dayComp(d);
+    if(pct>=0.9)return{bg:"#d8eedf",bd:"#a8d4b4",txt:"#3d7a52"};
+    if(pct>=0.6)return{bg:"#fdecd6",bd:"#e8c090",txt:"#7a4e1a"};
+    if(pct>=0.3)return{bg:"#fde4d4",bd:"#e8b098",txt:"#7a3818"};
+    if(pct>0)   return{bg:"#fce0e8",bd:"#e8a8bc",txt:"#7a2840"};
+    return{bg:"#fce8e8",bd:"#e0b4b4",txt:"#9a5050"};
+  };
+
+  const sum=Array.from({length:TOTAL_DAYS},(_,i)=>i+1).filter(d=>d<=Math.max(curDay,0))
+    .reduce((a,d)=>{const p=dayComp(d).pct;if(p>=0.9)a.g++;else if(p>=0.6)a.ok++;else a.b++;return a;},{g:0,ok:0,b:0});
+
+  let sepDone=false;
+
+  return(
+    <div className="ani">
+      <h2 className="stl">42-Day Journey Map</h2>
+      <div className="leg">
+        {[{c:"#d8eedf",l:"90%+"},{c:"#fdecd6",l:"60%+"},{c:"#fde4d4",l:"30%+"},{c:"#fce0e8",l:"Some"},{c:"#fce8e8",l:"Missed"},{c:"#f2ede6",l:"Upcoming"}]
+          .map(x=><div key={x.l} className="li"><div className="ld" style={{background:x.c}}/><span>{x.l}</span></div>)}
+      </div>
+      <div className="cg">
+        {DOW.map((d,i)=><div key={i} className="ch">{d}</div>)}
+        {cells.map((d,i)=>{
+          if(!d)return<div key={`e${i}`} className="ce"/>;
+          const showSep=d===22&&!sepDone;
+          if(showSep)sepDone=true;
+          const{done,total,pct}=dayComp(d);
+          const c=cs(d);const isNow=d===curDay;
+          const date=getDayDate(d);const can=d<=Math.max(curDay,1);
+          const sp=[];
+          if(isSun(d))sp.push("✨");
+          if(OIL_DAYS.has(d))sp.push("💧");
+          if(WASH_DAYS.has(d))sp.push("🚿");
+          return(
+            <React.Fragment key={d}>
+              {showSep&&<><div className="csep"/><div className="cslbl">✦ Cycle 2 starts ✦</div></>}
+              <div className={`cc${isNow?" cnow":""}${can?" clk":""}`}
+                style={{background:c.bg,borderColor:isNow?"#6d9e84":c.bd,borderWidth:isNow?2:1,color:c.txt}}
+                onClick={()=>can&&onClick(d)} onMouseEnter={()=>setHov(d)} onMouseLeave={()=>setHov(null)}>
+                <span className="cdn">{d}</span>
+                <span style={{fontSize:7,opacity:.65}}>{DOW[date.getDay()]}</span>
+                {d<=Math.max(curDay,0)?<span style={{fontSize:8}}>{done}/{total}</span>:<span style={{fontSize:8}}>—</span>}
+                {isNow&&<span className="cnd"/>}
+                {sp.length>0&&<div style={{display:"flex",gap:1,justifyContent:"center"}}>{sp.map((s,i)=><span key={i} style={{fontSize:7}}>{s}</span>)}</div>}
+                {pct>0&&pct<1&&d<=curDay&&<div className="cmb"><div className="cmf" style={{width:`${pct*100}%`,background:c.bd}}/></div>}
+              </div>
+            </React.Fragment>
+          );
+        })}
+      </div>
+      {hov&&(
+        <div className="ctip">
+          <strong>Day {hov}</strong> — {fmtLong(hov)}
+          {isSun(hov)&&" · ✨ Skincare"}{OIL_DAYS.has(hov)&&" · 💧 Oil"}{WASH_DAYS.has(hov)&&" · 🚿 Wash"}
+          {hov<=curDay&&` · ${dayComp(hov).done}/${dayComp(hov).total} done`}
+        </div>
+      )}
+      <div className="csum">
+        {[{v:sum.g,l:"Champion",c:"#3d7a52"},{v:sum.ok,l:"Good Days",c:"#c07a50"},{v:sum.b,l:"To Improve",c:"#c06888"}]
+          .map(x=><div key={x.l} className="si"><span className="sn" style={{color:x.c}}>{x.v}</span><span className="sl">{x.l}</span></div>)}
+      </div>
+    </div>
+  );
+}
+
+/* ─── PROGRESS VIEW ──────────────────────────── */
+function ProgView({data,curDay,stat,streak,dayComp}){
+  const logged=Math.max(0,Math.min(curDay,TOTAL_DAYS));
+  const catS={};
+  for(let d=1;d<=logged;d++){getTasks(d).forEach(t=>{catS[t.cat]=catS[t.cat]||{done:0,total:0};catS[t.cat].total++;if(data[d]?.tasks?.[t.id]?.done)catS[t.cat].done++;});}
+
+  const tmap={};
+  for(let d=1;d<=logged;d++){getTasks(d).forEach(t=>{tmap[t.id]=tmap[t.id]||{label:t.label,icon:t.icon,done:0,total:0};tmap[t.id].total++;if(data[d]?.tasks?.[t.id]?.done)tmap[t.id].done++;});}
+
+  const allT=Object.values(tmap).filter(t=>t.total>0);
+  const best=[...allT].sort((a,b)=>(b.done/b.total)-(a.done/a.total)).slice(0,4);
+  const needs=[...allT].filter(t=>t.done<t.total).sort((a,b)=>(a.done/a.total)-(b.done/b.total)).slice(0,3);
+  const perf=Array.from({length:logged},(_,i)=>i+1).filter(d=>{const{done,total}=dayComp(d);return total>0&&done===total;}).length;
+
+  let c1d=0,c1t=0,c2d=0,c2t=0;
+  for(let d=1;d<=Math.min(21,logged);d++){const t=getTasks(d),s=data[d]?.tasks||{};c1t+=t.length;c1d+=t.filter(tk=>s[tk.id]?.done).length;}
+  for(let d=22;d<=logged;d++){const t=getTasks(d),s=data[d]?.tasks||{};c2t+=t.length;c2d+=t.filter(tk=>s[tk.id]?.done).length;}
+
+  const hc=stat.pct>=70?"#6d9e84":stat.pct>=40?"#c07a50":"#c06888";
+  return(
+    <div className="ani pv">
+      <div className="ph">
+        <div className="pb2" style={{color:hc}}>{stat.pct}%</div>
+        <p className="psub">overall completion</p>
+        <div className="phr">
+          {[{v:streak,l:"Streak",i:"🔥"},{v:perf,l:"Perfect Days",i:"🌟"},{v:`${stat.done}/${stat.total}`,l:"Tasks Done",i:"✓"}]
+            .map(x=><div key={x.l} className="pm2"><span className="pmi">{x.i}</span><span className="pmv">{x.v}</span><span className="pml">{x.l}</span></div>)}
+        </div>
+      </div>
+
+      {c2t>0&&(
+        <div className="pcard">
+          <p className="pct">🔄 Cycle Comparison</p>
+          <div className="cycc">
+            <div className="cyci" style={{background:"#edf3ef",borderColor:"#b8d8c0"}}>
+              <div className="cycn" style={{color:"#4a7a5a"}}>{c1t>0?Math.round(c1d/c1t*100):0}%</div>
+              <div className="cycl" style={{color:"#7a9a84"}}>🌱 Cycle 1<br/>Days 1–21</div>
+            </div>
+            <div className="cyci" style={{background:"#f0eaf8",borderColor:"#c8b8e0"}}>
+              <div className="cycn" style={{color:"#6858a0"}}>{c2t>0?Math.round(c2d/c2t*100):0}%</div>
+              <div className="cycl" style={{color:"#8878c0"}}>🚀 Cycle 2<br/>Days 22–42</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="pcard">
+        <p className="pct">By Category</p>
+        {Object.entries(catS).length===0
+          ?<p style={{color:"#b0a89e",fontSize:13,textAlign:"center",padding:"12px 0"}}>Start logging to see your breakdown!</p>
+          :Object.entries(catS).map(([cat,{done,total}])=>{
+            const p=total?done/total*100:0;
+            return(<div key={cat} className="crow"><span className="crl" style={{color:CATS[cat].color}}>{CATS[cat].label}</span><div className="cb"><div className="cbf" style={{width:`${p}%`,background:CATS[cat].color}}/></div><span className="cbp">{Math.round(p)}%</span></div>);
+          })}
+      </div>
+
+      {best.some(t=>t.done>0)&&(
+        <div className="pcard">
+          <p className="pct">💚 Strongest Habits</p>
+          {best.filter(t=>t.done>0).map((t,i)=>{const p=Math.round(t.done/t.total*100);return(
+            <div key={i} className="hr"><span className="hi">{t.icon}</span><div className="hif"><span className="hl">{t.label}</span><div className="hb"><div className="hbf" style={{width:`${p}%`,background:"#6d9e84"}}/></div></div><span className="hpc">{p}%</span></div>
+          );})}
+        </div>
+      )}
+
+      {needs.length>0&&(
+        <div className="pcard" style={{borderColor:"#f8e4ec"}}>
+          <p className="pct">🌱 Give These More Love</p>
+          {needs.map((t,i)=>{const p=Math.round(t.done/t.total*100);return(
+            <div key={i} className="hr"><span className="hi">{t.icon}</span><div className="hif"><span className="hl">{t.label}</span><div className="hb"><div className="hbf" style={{width:`${p}%`,background:"#c06888"}}/></div></div><span className="hpc">{p}%</span></div>
+          );})}
+          <p className="nn">Progress, not perfection. Be gentle with yourself 🌸</p>
+        </div>
+      )}
+
+      <div className="pcard">
+        <p className="pct">🗓️ Special Days Every Cycle</p>
+        <div className="sg">
+          {[{e:"✨",l:"Skincare",s:"Every Sunday",bg:"#fce8ef",bc:"#e0b4c4"},
+            {e:"💧",l:"Hair Oil",s:"Every 3 days",bg:"#fdf0e6",bc:"#e8c8a0"},
+            {e:"🚿",l:"Hair Wash",s:"Day after oil",bg:"#eaf4ee",bc:"#a8d4b4"}]
+            .map(x=><div key={x.l} className="spi" style={{background:x.bg,borderColor:x.bc}}>
+              <span style={{fontSize:20}}>{x.e}</span>
+              <span style={{fontWeight:600,fontSize:11}}>{x.l}</span>
+              <span style={{fontSize:10,color:"#9a9490"}}>{x.s}</span>
+            </div>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── FINAL REPORT ───────────────────────────── */
+function FinalReport({data,dayComp}){
+  let done=0,total=0,perf=0,best=0,cur=0;
+  for(let d=1;d<=TOTAL_DAYS;d++){
+    const t=getTasks(d),s=data[d]?.tasks||{};
+    const dc=t.filter(tk=>s[tk.id]?.done).length;
+    total+=t.length;done+=dc;
+    const p=t.length?dc/t.length:0;
+    if(p===1)perf++;
+    if(p>=0.6){cur++;best=Math.max(best,cur);}else cur=0;
+  }
+  const pct=total>0?Math.round(done/total*100):0;
+  const catS={};
+  for(let d=1;d<=TOTAL_DAYS;d++){
+    getTasks(d).forEach(t=>{
+      catS[t.cat]=catS[t.cat]||{done:0,total:0,label:CATS[t.cat].label,color:CATS[t.cat].color};
+      catS[t.cat].total++;if(data[d]?.tasks?.[t.id]?.done)catS[t.cat].done++;
+    });
+  }
+  const topCat=Object.values(catS).sort((a,b)=>(b.done/b.total)-(a.done/a.total))[0];
+  const hc=pct>=70?"#6d9e84":pct>=40?"#c07a50":"#c06888";
+
+  return(
+    <div className="fw">
+      <div className="fh">
+        <div className="fe">👑</div>
+        <h1 className="ft2">42 Days Complete!</h1>
+        <p className="fs2">Six weeks of showing up, every single day.<br/>You are genuinely not the same person who started. 🌟</p>
+      </div>
+
+      <div className="fsg">
+        {[{v:`${pct}%`,l:"Overall",i:"🏆",c:hc},{v:perf,l:"Perfect Days",i:"🌟",c:"#8878c0"},
+          {v:best,l:"Best Streak",i:"🔥",c:"#c07a50"},{v:done,l:"Tasks Done",i:"✓",c:"#5090bc"}]
+          .map(x=><div key={x.l} className="fsc"><div style={{fontSize:22,marginBottom:4}}>{x.i}</div><div className="fsn" style={{color:x.c}}>{x.v}</div><div className="fsl">{x.l}</div></div>)}
+      </div>
+
+      <div className="pcard" style={{marginBottom:12}}>
+        <p className="pct">📊 How You Did</p>
+        {Object.values(catS).map(cat=>{const p=cat.total?cat.done/cat.total*100:0;return(
+          <div key={cat.label} className="crow"><span className="crl" style={{color:cat.color}}>{cat.label}</span><div className="cb"><div className="cbf" style={{width:`${p}%`,background:cat.color}}/></div><span className="cbp">{Math.round(p)}%</span></div>
+        );})}
+        {topCat&&<p style={{fontSize:12,color:"#6d9e84",fontWeight:600,textAlign:"center",marginTop:10}}>🏅 Best category: {topCat.label} ({Math.round(topCat.done/topCat.total*100)}%)</p>}
+      </div>
+
+      <div className="pcard" style={{textAlign:"center",padding:"24px 20px",background:"linear-gradient(135deg,#eaf4ee,#ede8f8)",borderColor:"#c8c0e0"}}>
+        <div style={{fontSize:36,marginBottom:10}}>🌸</div>
+        <p style={{fontSize:15,fontWeight:700,color:"#2e2a28",marginBottom:10}}>What you built in 42 days:</p>
+        <p style={{fontSize:13,color:"#6e6860",lineHeight:1.9}}>
+          A body that moves · A mind that reads<br/>
+          A pen that writes · Skin that glows<br/>
+          Hair that's nourished · Meals that fuel you<br/>
+          A sleep rhythm · A morning ritual
+        </p>
+        <p style={{fontSize:14,fontWeight:700,color:"#8878c0",marginTop:16}}>That's not a tracker. That's a new you. 🌟</p>
+      </div>
+    </div>
+  );
+}
+
+/* ─── CELEBRATION POPUP ──────────────────────── */
+function CelPopup({d,onClose}){
+  const conf=["🌸","⭐","✨","🌟","💫","🎊","🌺","🎉"];
+  return(
+    <div className="ov" onClick={onClose}>
+      <div className="ob" onClick={e=>e.stopPropagation()}>
+        <div className="obg"/>
+        <div className="ocnt">
+          <span className="oe">{d.emoji||"🎉"}</span>
+          <div className="ocon">
+            {conf.map((c,i)=><span key={i} className="cp" style={{animationDelay:`${i*0.08}s`}}>{c}</span>)}
+          </div>
+          <h2 className="otl">{d.title}</h2>
+          <p className="omsg">{d.msg}</p>
+          <button className="obtn" onClick={onClose}>{d.isChamp?"Keep glowing! ✨":"Let's do this! →"}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
