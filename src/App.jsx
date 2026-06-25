@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 /* ─── NEW 42-DAY JOURNEY STARTS JUNE 24, 2026 ─── */
 const START   = new Date("2026-06-24T00:00:00");
